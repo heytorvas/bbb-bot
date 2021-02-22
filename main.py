@@ -1,7 +1,5 @@
 from bot import *
-
-email = ""
-password = ""
+from access import *
 
 browser = get_browser()
 login = set_login(browser, email, password)
