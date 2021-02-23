@@ -13,4 +13,9 @@ while True:
         back_again = loop_url_votation(vote_done)
     except:
         print('except')
+        browser.quit()
+        browser = get_browser()
+        login = set_login(browser, email, password)
+        page_vote = get_votation_page(login)
+
         pass
