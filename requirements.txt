@@ -8,3 +8,5 @@ matplotlib==3.3.2
 opencv-python
 keras-resnet==0.2.0
 imageai --upgrade
+SpeechRecognition
+pydub

@@ -19,6 +19,12 @@ def get_browser():
     print('browser')
     return browser
 
+def access_bbb_page(browser):
+    browser.get('https://gshow.globo.com/realities/bbb/')
+    sleep(2)
+
+    return browser
+
 def loop_url_votation(browser):
     browser.get('https://gshow.globo.com/realities/bbb/')
     sleep(2)
@@ -39,8 +45,9 @@ def set_login(browser, email, password):
     return browser
 
 def get_votation_page(browser):
+    sleep(2)
     soup = get_html_page(browser)
-    sleep(3)
+    
     href_url = soup.find('a', {'class': 'bstn-hl-link'}).get('href')
 
     browser.get(href_url)
@@ -112,7 +119,7 @@ def set_vote(browser):
             return null;
         }
 
-        return findRealPlayerElement('Karol Conká')
+        return findRealPlayerElement('Lumena')
 
     ''') 
 
