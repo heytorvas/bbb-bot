@@ -4,3 +4,5 @@ __pycache__/
 *.png
 yolo.h5
 access.py
+*.mp3
+*.wav

@@ -71,7 +71,6 @@ def set_login_recaptha(browser, email, password):
     sleep(1)
 
     browser.switch_to.default_content()
-
     iframe_content = get_iframe_content_login(browser)
     browser.switch_to.frame(iframe_content)
     sleep(1)
@@ -79,7 +78,6 @@ def set_login_recaptha(browser, email, password):
     try:
         browser.find_element_by_xpath('//*[@id="recaptcha-audio-button"]').click()
         sleep(1)
-    
     except:
         pass
 
@@ -93,8 +91,6 @@ def set_login_recaptha(browser, email, password):
             soup = get_html_page(browser)
             print(soup)
             audio_url = soup.find('a', {'class': 'rc-audiochallenge-tdownload-link'}).get('href')
-            #audio_url = browser.find_element_by_xpath('/html/body/div/div/div[6]/a').get_attribute('href').strip()
-
             print('audio')
 
             download_audio_mp3(audio_url)
@@ -104,23 +100,18 @@ def set_login_recaptha(browser, email, password):
 
             browser.find_element_by_xpath('//*[@id="audio-response"]').send_keys(audio_text)
             sleep(1)
-
-            browser.save_screenshot('printscreen.png')
-
+            #browser.save_screenshot('printscreen.png')
             browser.find_element_by_xpath('//*[@id="recaptcha-verify-button"]').click()
             sleep(2)
 
-            browser.save_screenshot('printscreen2.png')
+            #browser.save_screenshot('printscreen2.png')
         except:
             break
 
     browser.switch_to.default_content()
     sleep(1)
-
     browser.find_element_by_xpath('/html/body/div[1]/main/div[2]/div/div/div/div[2]/div[1]/form/div[6]/button').click()
     sleep(3)
-
-    browser.save_screenshot('printscreen3.png')
+    #browser.save_screenshot('printscreen3.png')
 
     return browser
-    
