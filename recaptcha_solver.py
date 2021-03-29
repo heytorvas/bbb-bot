@@ -59,9 +59,16 @@ def set_login_recaptha(browser, email, password):
     browser.find_element_by_xpath('/html/body/header/div/div[4]/div[3]/div/div/a').click()
     sleep(2)
 
-    browser.find_element_by_xpath('//*[@id="login"]').send_keys(email)
-    browser.find_element_by_xpath('//*[@id="password"]').send_keys(password)
-    sleep(1)
+    try:
+        browser.find_element_by_xpath('//*[@id="login"]').send_keys(email)
+        browser.find_element_by_xpath('//*[@id="password"]').send_keys(password)
+        sleep(1)
+    except:
+        print('loop 50s')
+        sleep(50)
+        browser.find_element_by_xpath('//*[@id="login"]').send_keys(email)
+        browser.find_element_by_xpath('//*[@id="password"]').send_keys(password)
+        sleep(1)
 
     iframe = get_iframe_click_login(browser)
     browser.switch_to.frame(iframe)

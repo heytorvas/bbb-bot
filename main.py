@@ -6,6 +6,7 @@ browser = get_browser_recaptha()
 login = set_login_recaptha(browser, email, password)
 bbb_page = access_bbb_page(login)
 page_vote = get_votation_page(bbb_page)
+total_vote = 0
 
 while True:
     try:
@@ -13,12 +14,11 @@ while True:
         checkbox = click_on_checkbox(vote)
         vote_done = get_captcha(checkbox)
         back_again = loop_url_votation(vote_done)
+        total_vote += 1
+        print('total votes: {}'.format(total_vote))
         
     except:
         print('except')
-        browser.quit()
-        browser = get_browser_recaptha()
-        login = set_login_recaptha(browser, email, password)
         bbb_page = access_bbb_page(login)
         page_vote = get_votation_page(bbb_page)
         pass

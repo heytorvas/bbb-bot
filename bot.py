@@ -51,7 +51,7 @@ def get_votation_page(browser):
     href_url = soup.find('a', {'class': 'bstn-hl-link'}).get('href')
 
     browser.get(href_url)
-    sleep(1)
+    sleep(2)
 
     print('access page')
     return browser
@@ -119,7 +119,7 @@ def set_vote(browser):
             return null;
         }
 
-        return findRealPlayerElement('Lumena')
+        return findRealPlayerElement('Sarah')
 
     ''') 
 
@@ -161,44 +161,47 @@ def get_iframe_content(browser):
 def get_captcha(browser):
     print('captcha')
     for loop in range(0, 2):
-        iframe_content = get_iframe_content(browser)
-        browser.switch_to.frame(iframe_content)
+        try:
+            iframe_content = get_iframe_content(browser)
+            browser.switch_to.frame(iframe_content)
 
-        sleep(2)
-        soup = get_html_page(browser)
-        captcha_text_pt = soup.find('div', {'class': 'prompt-text'}).text
-        captcha_word_en = get_captcha_word(captcha_text_pt)
-        print('WORD: {}'.format(captcha_word_en))
+            sleep(2)
+            soup = get_html_page(browser)
+            captcha_text_pt = soup.find('div', {'class': 'prompt-text'}).text
+            captcha_word_en = get_captcha_word(captcha_text_pt)
+            print('WORD: {}'.format(captcha_word_en))
 
-        images = soup.find_all('div', {'class': 'image'})
-        style_list = []
-        for i in images:
-            style_list.append(i.get('style'))
+            images = soup.find_all('div', {'class': 'image'})
+            style_list = []
+            for i in images:
+                style_list.append(i.get('style'))
 
-        imgs_list = get_url_imgs(style_list)
+            imgs_list = get_url_imgs(style_list)
 
-        for i in range(len(imgs_list)):
-            response = requests.get(imgs_list[i])
-            file1 = open("images/{}.png".format(i), "wb")
-            file1.write(response.content)
-            file1.close()
+            for i in range(len(imgs_list)):
+                response = requests.get(imgs_list[i])
+                file1 = open("images/{}.png".format(i), "wb")
+                file1.write(response.content)
+                file1.close()
 
-        sleep(1)
+            sleep(1)
 
-        res = get_detection_captcha(captcha_word_en)
-        print(res)
+            res = get_detection_captcha(captcha_word_en)
+            print(res)
 
-        for i in res:
-            if res[i] == True:
-                browser.find_element_by_xpath('/html/body/div[1]/div/div/div[2]/div[{}]'.format(i+1)).click()
-                print('click')
-                sleep(1)
+            for i in res:
+                if res[i] == True:
+                    browser.find_element_by_xpath('/html/body/div[1]/div/div/div[2]/div[{}]'.format(i+1)).click()
+                    print('click')
+                    sleep(1)
 
-        #browser.save_screenshot('printscreen{}.png'.format(loop))
-        browser.find_element_by_xpath('/html/body/div[2]/div[8]').click()
-        sleep(2)
-        browser.switch_to_default_content()
-        sleep(2)
+            #browser.save_screenshot('printscreen{}.png'.format(loop))
+            browser.find_element_by_xpath('/html/body/div[2]/div[8]').click()
+            sleep(2)
+            browser.switch_to_default_content()
+            sleep(2)
+        except:
+            pass
 
     #browser.save_screenshot('printscreen_final.png')
     print('vote done')
